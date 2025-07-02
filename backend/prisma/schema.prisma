@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model historico_irrigacao {
+  id              Int      @id @default(autoincrement())
+  planta_id       Int?
+  quantidade_agua Float    @db.Real
+  modo            Boolean
+  data_hora       DateTime @default(now()) @db.Timestamp(6)
+  plantas         plantas? @relation(fields: [planta_id], references: [id], onUpdate: NoAction, map: "fk_irrigacao_planta")
+}
+
+model plantas {
+  id                        Int                   @id @default(autoincrement())
+  nome                      String                @db.VarChar(100)
+  tipo                      String                @db.VarChar(50)
+  umidade_ideal             Float                 @db.Real
+  agua_por_dia              Float                 @db.Real
+  intervalo_irrigacao_horas Int
+  sensor_id                 Int?
+  observacoes               String?
+  historico_irrigacao       historico_irrigacao[]
+  sensores                  sensores?             @relation(fields: [sensor_id], references: [id], onUpdate: NoAction, map: "fk_planta_sensor")
+}
+
+model sensor_umidade {
+  id            Int       @id @default(autoincrement())
+  sensor_id     Int?
+  valor_umidade Float     @db.Real
+  data_hora     DateTime  @default(now()) @db.Timestamp(6)
+  sensores      sensores? @relation(fields: [sensor_id], references: [id], onUpdate: NoAction, map: "fk_sensor_umidade_sensor")
+}
+
+model sensores {
+  id             Int              @id @default(autoincrement())
+  nome           String?          @db.VarChar(100)
+  descricao      String?
+  plantas        plantas[]
+  sensor_umidade sensor_umidade[]
+}
+
+model status_bomba {
+  id            Int      @id @default(autoincrement())
+  status        Boolean
+  atualizado_em DateTime @default(now()) @db.Timestamp(6)
+}
