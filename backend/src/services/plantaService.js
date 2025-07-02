@@ -9,14 +9,14 @@ const adicionarPlanta = async ({
     intervalo_irrigacao_horas,
     sensor_id,
     // observacoes,
-}) => {
-    const sensor = await prisma.sensores.findUnique({
-        where: { id: sensor_id },
-    });
+    }) => {
+    // const sensor = await prisma.sensores.findUnique({
+    //     where: { id: sensor_id },
+    // });
 
-    if(!sensor) {
-        throw new Error('Sensor não encontrado');
-    }
+    // if(!sensor) {
+    //     throw new Error('Sensor não encontrado');
+    // }
 
     return await prisma.plantas.create({
       data: {

@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(express.json());
-app.use('/planta', plantaRoutes);
+app.use('/plantas', plantaRoutes);
 
 
 module.exports = app;
