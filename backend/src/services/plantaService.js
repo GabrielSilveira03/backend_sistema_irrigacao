@@ -26,6 +26,11 @@ const buscarPlantaPorId = async (id) => {
   return planta;
 };
 
+const contagemPlantas = async () => {
+  const total = await prisma.plantas.count();
+  return total; 
+}
+
 const adicionarPlanta = async ({
     nome,
     tipo,
@@ -113,6 +118,7 @@ const excluirPlanta = async (id) => {
 module.exports ={
     adicionarPlanta,
     listarPlantas,
+    contagemPlantas,
     buscarPlantaPorId,
     atualizarPlanta,
     excluirPlanta,

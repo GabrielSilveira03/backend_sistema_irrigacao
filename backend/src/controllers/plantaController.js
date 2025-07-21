@@ -21,6 +21,16 @@ const buscarPlantaPorId = async (req, res) => {
     }
 }
 
+const contagemPlantas = async (req, res) => {
+    try {
+        const total = await Planta.contagemPlantas();
+        res.status(200).json({ quantidade: total });
+    } catch (error) {
+        console.error('Erro ao contabilizar o total de plantas:', error);
+        res.status(500).json({ error: 'Erro ao contabilizar o total de plantas' });
+    }
+}
+
 const adicionarPlanta = async (req, res) => {
     try {
         const {
@@ -109,6 +119,7 @@ const excluirPlanta = async (req, res) => {
 module.exports ={
     adicionarPlanta,
     listarPlantas,
+    contagemPlantas,
     buscarPlantaPorId,
     atualizarPlanta,
     excluirPlanta,

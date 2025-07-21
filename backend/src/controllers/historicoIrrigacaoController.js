@@ -30,7 +30,7 @@ const adicionarHistorico = async (req, res) => {
     try {
         const { planta_id, quantidade_agua, modo } = req.body;
 
-        if (quantidade_agua == null || modo == null) {
+        if (planta_id == null || quantidade_agua == null || modo == null) {
             return res.status(400).json({ error: 'quantidade_agua e modo são obrigatórios' });
         }
 
