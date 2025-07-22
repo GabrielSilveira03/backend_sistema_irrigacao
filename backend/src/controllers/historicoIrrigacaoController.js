@@ -47,8 +47,38 @@ const adicionarHistorico = async (req, res) => {
     }
 };
 
+const aguaPorPlantaNoDia = async (req, res) => {
+    try {
+        const { plantaId, data } = req.params;
+        if (!plantaId || !data) {
+            return res.status(400).json({ error: 'plantaId e data são obrigatórios' });
+        }
+        const total = await HistoricoService.aguaPorPlantaNoDia(Number(plantaId), data);
+        res.status(201).json({ plantaId, data, totalAgua: total });
+    } catch (error) {
+        console.error('Erro ao buscar a quantidade de água utilizada por planta:', error);
+        res.status(500).json({ error: 'Erro ao buscar quantidade de água utilizada por planta' });
+    }
+}
+
+const aguaTotalNoDia = async (req, res) => {
+    try {
+        const { data } = req.params;
+        if (!data) {
+            return res.status(400).json({ error: 'data é obrigatória' });
+        }
+        const total = await HistoricoService.aguaTotalNoDia(data);
+        res.status(201).json({ data, totalAgua: total });
+    } catch (error) {
+        console.error('Erro ao buscar a quantidade de água utilizada no total:', error);
+        res.status(500).json({ error: 'Erro ao buscar quantidade de água utilizada no total' });
+    }
+}
+
 module.exports = {
     listarHistoricos,
     buscarHistoricoPorId,
     adicionarHistorico,
+    aguaPorPlantaNoDia,
+    aguaTotalNoDia,
 };
