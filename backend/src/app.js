@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const plantaRoutes = require('./routes/plantaRoutes');
 const sensorRoutes = require('./routes/sensorRoutes');
@@ -8,6 +9,7 @@ const statusBombaRoutes = require('./routes/statusBombaRoutes');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use('/plantas', plantaRoutes);
 app.use('/sensores', sensorRoutes);
