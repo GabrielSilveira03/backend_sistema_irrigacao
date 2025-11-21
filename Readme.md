@@ -95,7 +95,6 @@ backend/
 │   ├── controllers/
 │   ├── services/
 │   └── routes/
-├── scripts/          # Scripts de mock e populadores
 ```
 
 - Veja a [docker-compose.yaml](https://github.com/GabrielSilveira03/backend_sistema_irrigacao/blob/main/docker-compose.yaml) na raiz do projeto para detalhes sobre execução com containers.
@@ -112,7 +111,7 @@ O gerenciamento do banco é feito usando Prisma ORM. Certifique-se de ajustar as
 
 O projeto conta com **dois endpoints principais de análise inteligente utilizando OpenAI GPT API** para auxiliar decisões de irrigação automáticas e recomendação agronômica:
 
-### 1. **Análise de Dados do Sensor (`/sensor/analise`)**
+### 1. **Análise de Dados do Sensor (`/sensores/analise`)**
 
 - **Método:** `POST`
 - **Descrição:** Envia dados do sensor (ex.: umidade, temperatura) para análise inteligente via IA.
@@ -127,7 +126,7 @@ O projeto conta com **dois endpoints principais de análise inteligente utilizan
 
 - **Retorno:** Recomendações e alertas gerados pela IA com base nos dados enviados.
 
-### 2. **Diagnóstico de Eficiência da Irrigação por Planta (`/planta/:id/analisar-irrigacao`)**
+### 2. **Diagnóstico de Eficiência da Irrigação por Planta (`/plantas/:id/analisar-irrigacao`)**
 
 - **Método:** `GET`
 - **Descrição:** Avalia automaticamente, via IA, se a irrigação da planta está adequada considerando histórico, parâmetros ideais e leituras dos sensores.
