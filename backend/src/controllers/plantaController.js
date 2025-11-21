@@ -1,4 +1,5 @@
 const Planta = require('../services/plantaService');
+const { analisarEficienciaIrrigacao } = require('../services/iaService');
 
 const listarPlantas = async (req, res) => {
     try {
@@ -116,6 +117,18 @@ const excluirPlanta = async (req, res) => {
     }
 }
 
+const analisarIrrigacaoPlanta = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const dadosPlanta = await Planta.dadosParaAnaliseEficiencia(Number(id));
+    const resultadoIA = await analisarEficienciaIrrigacao(dadosPlanta);
+    res.status(200).json({ resultadoIA });
+  } catch (error) {
+    console.error('Erro na análise de irrigação:', error);
+    res.status(500).json({ error: 'Erro na análise de irrigação', detalhes: error.message });
+  }
+};
+
 module.exports ={
     adicionarPlanta,
     listarPlantas,
@@ -123,4 +136,5 @@ module.exports ={
     buscarPlantaPorId,
     atualizarPlanta,
     excluirPlanta,
+    analisarIrrigacaoPlanta,
 };

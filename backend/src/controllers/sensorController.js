@@ -1,4 +1,5 @@
 const Sensor = require('../services/sensorService');
+const { analiseSensorData } = require('../services/iaService');
 
 const listarSensores = async (req, res) => {
     try {
@@ -58,10 +59,26 @@ const deletarSensor = async (req, res) => {
     }
 };
 
+const analisarDadosSensor = async (req, res) => {
+     const sensorData = req.body; // Ex: { umidade: 45, temperatura: 28 }
+
+  try {
+    const aiFeedback = await analiseSensorData(sensorData);
+
+    res.status(200).json({
+      sensorData,
+      aiFeedback
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao consultar IA", details: err.message });
+  }
+}
+
 module.exports = {
     listarSensores,
     buscarSensorPorId,
     adicionarSensor,
     atualizarSensor,
     deletarSensor,
+    analisarDadosSensor,
 };

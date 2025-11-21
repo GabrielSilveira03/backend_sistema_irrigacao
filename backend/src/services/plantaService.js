@@ -40,13 +40,6 @@ const adicionarPlanta = async ({
     sensor_id,
     observacoes,
     }) => {
-    // const sensor = await prisma.sensores.findUnique({
-    //     where: { id: sensor_id },
-    // });
-
-    // if(!sensor) {
-    //     throw new Error('Sensor não encontrado');
-    // }
 
     return await prisma.plantas.create({
       data: {
@@ -115,6 +108,35 @@ const excluirPlanta = async (id) => {
   return { message: "Planta excluída com sucesso" };
 }
 
+const dadosParaAnaliseEficiencia = async (planta_id) => {
+  // Busca planta e seus dados de irrigação e sensores
+  const planta = await prisma.plantas.findUnique({
+    where: { id: planta_id },
+    include: {
+      historico_irrigacao: { orderBy: { data_hora: 'desc' }, take: 10 },
+      sensores: {
+        include: { 
+          sensor_umidade: { orderBy: { data_hora: 'desc' }, take: 10 } 
+        }
+      }
+    }
+  });
+
+  if (!planta) {
+    throw new Error('Planta não encontrada');
+  }
+
+  return {
+    nome: planta.nome,
+    tipo: planta.tipo,
+    umidade_ideal: planta.umidade_ideal,
+    agua_por_dia: planta.agua_por_dia,
+    intervalo_irrigacao_horas: planta.intervalo_irrigacao_horas,
+    historico_irrigacao: planta.historico_irrigacao,
+    registro_umidade: (planta.sensores && planta.sensores.sensor_umidade) ? planta.sensores.sensor_umidade : [],
+  };
+};
+
 module.exports ={
     adicionarPlanta,
     listarPlantas,
@@ -122,4 +144,5 @@ module.exports ={
     buscarPlantaPorId,
     atualizarPlanta,
     excluirPlanta,
+    dadosParaAnaliseEficiencia,
 };

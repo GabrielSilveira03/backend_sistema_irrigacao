@@ -24,3 +24,11 @@ Thumbs.db
 *.log
 *.tmp
 
+# Ignorar o backup do banco de dados
+backend/backup.sql
+
+# Ignorar o arquivo de exemplo dentro de src
+backend/src/example.mjs
+
+# Ignorar a pasta inteira de scripts
+backend/scripts/

@@ -9,5 +9,6 @@ router.get('/:id', plantaController.buscarPlantaPorId);
 router.post('/', plantaController.adicionarPlanta);
 router.put('/:id', plantaController.atualizarPlanta);
 router.delete('/:id', plantaController.excluirPlanta);
+router.get('/:id/analisar-irrigacao', plantaController.analisarIrrigacaoPlanta);
 
 module.exports = router;
